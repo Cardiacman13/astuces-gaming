@@ -15,6 +15,7 @@ Autre documentation complémentaire et **imporatante à lire** avec des **[Astuc
 7. **[Problème de Performance avec BAR ou SAM](#problème-de-performance-avec-bar-ou-sam)**
 8. **[Gamemode](#gamemode)**
 9. **[Amélioration des Performances avec PROTON_HIDE_NVIDIA_GPU](#amélioration-des-performances-avec-proton_hide_nvidia_gpu)**
+10. **[Problème de Performance avec les CPU Intel ayant des e-cores](#problème-de-performance-avec-les-cpu-intel-ayant-des-e-cores)**
 
 ---
 
@@ -384,5 +385,59 @@ En ajoutant `PROTON_HIDE_NVIDIA_GPU=1 %command%` dans les options de lancement d
 Cette astuce peut transformer des zones auparavant injouables en expériences fluides. Utile pour les joueurs utilisant des GPU Nvidia sur Linux et rencontrant des problèmes de performances avec des jeux DirectX 12. Bien que certaines fonctionnalités soient désactivées, le gain en fluidité peut largement compenser cette perte.
 
 **Note** : Cette astuce est applicable à d'autres jeux DirectX 12 et peut être testée sur différents titres pour voir si des améliorations similaires sont observées.
+
+---
+
+Voici le bloc de texte formaté que tu peux insérer dans ton guide. J'ai respecté ta structure (ancres, liens internes et mise en forme Markdown).
+
+Tu peux l'ajouter à la suite de ton document, et n'oublie pas de mettre à jour le lien dans la **Table des Matières** (point n°10).
+
+---
+
+
+## Problème de Performance avec les CPU Intel ayant des e-cores
+
+### Contexte
+
+Depuis la 12ᵉ génération (Alder Lake), Intel utilise une architecture hybride combinant des **P-cores** (Performance) et des **E-cores** (Efficacité). Sous Linux, bien que le scheduler (planificateur) se soit amélioré, il arrive encore que le système envoie par erreur des tâches lourdes (le moteur du jeu ou le traitement audio) sur les E-cores, beaucoup moins puissants. Certains jeux utilisent très bien tous les coeurs et fonctionnent mieux avec tous les coeurs donc c'est a n'utiliser seulement si on note un problème.
+
+**Symptômes courants :**
+
+* Chutes brutales de FPS (stuttering).
+* Craquements, grésillements ou décalages du son en jeu.
+* Performances globales bien inférieures à celles attendues.
+
+### Solutions pour corriger le problème
+
+#### 1. Utiliser GameMode pour "pin" les P-cores
+
+C'est la solution la plus élégante car elle est automatique et ne nécessite pas de redémarrage. Vous pouvez configurer **GameMode** pour qu'il force le jeu à n'utiliser que les cœurs de performance (P-cores) et ignore les E-cores.
+
+* **Configuration :** Dans votre fichier `gamemode.ini` (généralement dans `~/.config/` ou `/etc/`), utilisez la section `[custom]`, utilisez l'option `pin_cores=`. Les P-cores sont toujours les premiers si vous en avez 8 il faudra mettre `pin_cores=0-15` pour pin les 16 premiers threads de votre cpu (en suposant que chaque P-cores et 2 threads à vous de vérifier tout ça).
+
+#### 2. Désactiver les E-cores dans le BIOS
+
+C'est la solution radicale. En désactivant les E-cores directement dans les paramètres de votre carte mère, votre processeur se comportera comme un CPU classique composé uniquement de P-cores.
+
+* **Avantage :** Plus aucun conflit possible, stabilité maximale.
+* **Inconvénient :** Vous perdez les bénéfices du multitâche en bureautique, votre CPU consommera potentiellement plus d'énergie sur les tâches simples, ça s'appliquera sur tous les jeux alors que certains les utilisent très bien sans problème, perte de perf par rapport à la solution 1 et 3 ou les E-cores restent actifs pour les tâches en arrière plan laissant encore plus de puissance aux P-cores pin au jeu en cours.
+
+#### 3. Utiliser des outils de gestion de cœurs (CoreCtrl ou CPUPower)
+
+Certains outils permettent de définir des profils par application.
+
+* Avec **CoreCtrl**, vous pouvez créer un profil pour votre jeu qui désactive les cœurs spécifiques au moment du lancement.
+* L'utilisation de scripts via `taskset` dans les options de lancement Steam est également très efficace. Par exemple, pour un i9-14900HX (8 P-cores / 16 threads), vous pourriez lancer votre jeu avec :
+```bash
+taskset -c 0-15 %command%
+```
+
+*(Même chose que pour le gamemode à vous de vérifier combien de threads pin selon votre CPU).*
+
+#### 4. Utiliser un scheduler qui règle le problème
+
+Regardez cette vidéo : https://www.youtube.com/watch?v=PsqwImr0Rnc 
+
+Flash en mode low latency règle les problèmes chez moi, mais hélas certains jeux ne l'aime pas donc je trouve ça moins élégant que d'utiliser le gamemode ou taskset 
 
 ---
