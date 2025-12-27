@@ -399,7 +399,7 @@ Tu peux l'ajouter à la suite de ton document, et n'oublie pas de mettre à jour
 
 ### Contexte
 
-Depuis la 12ᵉ génération (Alder Lake), Intel utilise une architecture hybride combinant des **P-cores** (Performance) et des **E-cores** (Efficacité). Sous Linux, bien que le scheduler (planificateur) se soit amélioré, il arrive encore que le système envoie par erreur des tâches lourdes (le moteur du jeu ou le traitement audio) sur les E-cores, beaucoup moins puissants. Certains jeux utilisent très bien tous les coeurs et fonctionnent mieux avec tous les coeurs donc c'est a n'utiliser seulement si on note un problème.
+Depuis la 12ᵉ génération (Alder Lake), Intel utilise une architecture hybride combinant des **P-cores** (Performance) et des **E-cores** (Efficacité). Sous Linux, bien que le scheduler (planificateur) se soit amélioré, il arrive encore que le système envoie par erreur des tâches lourdes (le moteur du jeu ou le traitement audio) sur les E-cores, beaucoup moins puissants. Problème, certains jeux détestent les e-cores, d'autres les utilisent très bien et fonctionnent mieux avec tous les coeurs actifs, donc il ne faut couper les e-cores que en cas de gros problèmes flagrants.
 
 **Symptômes courants :**
 
