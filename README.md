@@ -22,7 +22,7 @@ Autre documentation complémentaire et **imporatante à lire** avec des **[Astuc
 <a name="performance-à-attendre-des-jeux-selon-votre-configuration-matérielle"></a>
 ## Performance à Attendre des Jeux Selon Votre Configuration Matérielle
 
-Si vous avez un CPU Intel de 12ᵉ génération ou plus, soyez attentif au problème du splitlock mitigate, abordé dans [le chapitre 6](#problème-de-performance-avec-les-cpu-intel-de-12ᵉ-génération-et-plus) de cette page.
+Si vous avez un CPU Intel de 12ᵉ génération ou plus, soyez attentif aux problèmes du splitlock mitigate et des E-cores, abordés dans les chapitres 6 et 10 de cette page.
 
 1. **PC avec GPU AMD ** :
    - **Avantage** : La plupart des jeux fonctionnent généralement mieux sous Linux que sous Windows, y compris les jeux DirectX 12, **excepté pour le Ray Tracing quand il est implémenté avec des technologies de Nvidia**. Le driver MESA est installé par défaut sur toutes les distributions, ce qui permet une compatibilité immédiate.
