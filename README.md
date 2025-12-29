@@ -411,7 +411,7 @@ Depuis la 12ᵉ génération (Alder Lake), Intel utilise une architecture hybrid
 
 #### 1. Utiliser GameMode pour "pin" les P-cores
 
-C'est la solution la plus élégante car elle est automatique et ne nécessite pas de redémarrage. Vous pouvez configurer **GameMode** pour qu'il force le jeu à n'utiliser que les cœurs de performance (P-cores) et ignore les E-cores.
+C'est la solution la plus élégante car on peut l'appliquer que sur le ou les jeux problèmatiques et que les e-cores restent fonctionnels pour les processus du bureau en arrière plan. Vous pouvez configurer **GameMode** pour qu'il force le jeu à n'utiliser que les cœurs de performance (P-cores) et ignore les E-cores.
 
 * **Configuration :** Dans votre fichier `gamemode.ini` (généralement dans `~/.config/` ou `/etc/`), utilisez la section `[custom]`, utilisez l'option `pin_cores=`. Les P-cores sont toujours les premiers si vous en avez 8 il faudra mettre `pin_cores=0-15` pour pin les 16 premiers threads de votre cpu (en suposant que chaque P-cores et 2 threads à vous de vérifier tout ça).
 
@@ -420,7 +420,7 @@ C'est la solution la plus élégante car elle est automatique et ne nécessite p
 C'est la solution radicale. En désactivant les E-cores directement dans les paramètres de votre carte mère, votre processeur se comportera comme un CPU classique composé uniquement de P-cores.
 
 * **Avantage :** Plus aucun conflit possible, stabilité maximale.
-* **Inconvénient :** Vous perdez les bénéfices du multitâche en bureautique, votre CPU consommera potentiellement plus d'énergie sur les tâches simples, ça s'appliquera sur tous les jeux alors que certains les utilisent très bien sans problème, perte de perf par rapport à la solution 1 et 3 ou les E-cores restent actifs pour les tâches en arrière plan laissant encore plus de puissance aux P-cores pin au jeu en cours.
+* **Inconvénient :** Vous perdez des bénéfices du multitâche en bureautique, votre CPU consommera potentiellement plus d'énergie sur les tâches simples, ça s'appliquera sur tous les jeux alors que certains n'ont aucun problème avec le E-core et les utilisent même très bien, perte de perf par rapport à la solution 1 et 3 ou les E-cores restent actifs pour les processus en arrière plan laissant encore plus de puissance aux P-cores pin au jeu en cours.
 
 #### 3. Utiliser des outils de gestion de cœurs (CoreCtrl ou CPUPower)
 
@@ -438,6 +438,6 @@ taskset -c 0-15 %command%
 
 Regardez cette vidéo : https://www.youtube.com/watch?v=PsqwImr0Rnc 
 
-Flash en mode low latency règle les problèmes chez moi, mais hélas certains jeux ne l'aime pas donc je trouve ça moins élégant que d'utiliser le gamemode ou taskset 
+Flash en mode low latency règle les problèmes chez moi, mais hélas certains jeux ne l'aiment pas, donc je trouve ça moins élégant que d'utiliser le gamemode ou taskset, surtout si on est déjà sur une distribution gaming avec un scheduler optimisé.
 
 ---
